@@ -1,0 +1,51 @@
+// Focus on this:
+$width: 200px
+$height: 200px
+$boxes: 10
+$animation: true
+$animation__duration: 10s
+  
+.container
+  position: absolute
+  width: $width
+  height: $height
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  
+  @if $animation == true
+    animation: $animation__duration rotate-container infinite ease-in-out alternate
+
+.box
+  position: absolute
+  border: 1px solid #8C9EFF
+  width: $width
+  height: $height
+  
+  @if $animation == true
+    animation: $animation__duration rotate-square ease-in infinite alternate
+  
+  @for $i from 1 through $boxes
+    &:nth-child(#{$i})
+      $current: $i * (90 / $boxes) * 1deg
+      --current: #{$current}
+      transform: rotate(var(--current))
+  
+      @keyframes rotate-square
+        0%, 20%
+          transform: none
+        70%
+          transform: rotate(var(--current))
+          
+@keyframes rotate-container
+  0%
+    transform: translate(-50%, -50%) rotate(0deg)
+  100%
+    transform: translate(-50%, -50%) rotate(720deg)
+  
+  
+// IGNORE THIS!
+body
+  position: relative
+  height: 100vh
+  background-color: #0E1B38
